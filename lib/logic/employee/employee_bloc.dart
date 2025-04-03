@@ -22,8 +22,6 @@ class EmployeeBloc extends Bloc<EmployeeEvent, EmployeeState> {
           employeeList: [],
         )) {
     on<InitializeForm>((event, emit) => _updateFormForAddScreen(emit));
-    on<InitializeFormWithDefaultValue>(
-        (event, emit) => _updateFormForDetailsScreen(event, emit));
     on<UpdateFormField>((event, emit) => _updateFormFieldData(event, emit));
     on<FetchEmployeeList>((event, emit) => _fetchData(emit));
     on<AddOrUpdateEmployeeData>(
@@ -42,20 +40,6 @@ class EmployeeBloc extends Bloc<EmployeeEvent, EmployeeState> {
     state.joiningDateController.text = Constants.today;
     state.leavingDateController.text = '';
     emit(state);
-  }
-
-  // Update the employee data in the form
-  void _updateFormForDetailsScreen(
-      InitializeFormWithDefaultValue event, Emitter<EmployeeState> emit) {
-    state.employeeNameController.text = event.employee.employeeName;
-    state.employeeRoleController.text = event.employee.employeeRole;
-    state.joiningDateController.text =
-        Helper.formatDate(event.employee.joiningDate);
-    if (event.employee.leavingDate != null) {
-      state.leavingDateController.text =
-          Helper.formatDate(event.employee.leavingDate!);
-    }
-    emit(state.copyWith());
   }
 
   // Update the specific field in the form based on the received event

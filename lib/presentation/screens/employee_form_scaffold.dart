@@ -38,17 +38,20 @@ class _EmployeeFormScaffoldState extends State<EmployeeFormScaffold> {
       _bloc.state.employeeRoleController.text = widget.employee!.employeeRole;
 
       DateTime joinedDate = widget.employee!.joiningDate;
-      if (joinedDate.year == DateTime.now().year &&
-          joinedDate.month == DateTime.now().month &&
-          joinedDate.day == DateTime.now().day) {
+      if (Helper.isCurrentDate(joinedDate)) {
         _bloc.state.joiningDateController.text = Constants.today;
       } else {
         _bloc.state.joiningDateController.text =
             Helper.formatDate(widget.employee!.joiningDate);
       }
       if (widget.employee!.leavingDate != null) {
-        _bloc.state.leavingDateController.text =
-            Helper.formatDate(widget.employee!.leavingDate!);
+        DateTime leavingDate = widget.employee!.leavingDate ?? DateTime.now();
+        if (Helper.isCurrentDate(leavingDate)) {
+          _bloc.state.leavingDateController.text = Constants.today;
+        } else {
+          _bloc.state.leavingDateController.text =
+              Helper.formatDate(widget.employee!.leavingDate!);
+        }
       }
     }
   }
@@ -289,7 +292,8 @@ class _EmployeeFormScaffoldState extends State<EmployeeFormScaffold> {
                             bgColor: AppTheme.primaryColor,
                             labelColor: AppTheme.bgColor,
                             onTap: () {
-                              if (_bloc.state.employeeNameController.text.isEmpty) {
+                              if (_bloc
+                                  .state.employeeNameController.text.isEmpty) {
                                 Helper.emptyFieldSnackBar(
                                   context,
                                   Constants.emptyNameMessage,
@@ -307,19 +311,25 @@ class _EmployeeFormScaffoldState extends State<EmployeeFormScaffold> {
                                       employeeId: widget.employee == null
                                           ? Helper.generateRandomEmployeeId()
                                           : widget.employee!.employeeId,
-                                      employeeName:
-                                      _bloc.state.employeeNameController.text,
-                                      employeeRole:
-                                      _bloc.state.employeeRoleController.text,
-                                      joiningDate:
-                                      _bloc.state.joiningDateController.text ==
-                                          Constants.today
+                                      employeeName: _bloc
+                                          .state.employeeNameController.text,
+                                      employeeRole: _bloc
+                                          .state.employeeRoleController.text,
+                                      joiningDate: _bloc.state
+                                                  .joiningDateController.text ==
+                                              Constants.today
+                                          ? DateTime.now()
+                                          : Helper.convertToDateTime(_bloc
+                                                  .state
+                                                  .joiningDateController
+                                                  .text) ??
+                                              DateTime.now(),
+                                      leavingDate: _bloc.state
+                                                  .leavingDateController.text ==
+                                              Constants.today
                                           ? DateTime.now()
                                           : Helper.convertToDateTime(_bloc.state
-                                          .joiningDateController.text) ??
-                                          DateTime.now(),
-                                      leavingDate: Helper.convertToDateTime(
-                                          _bloc.state.leavingDateController.text),
+                                              .leavingDateController.text),
                                     ),
                                     context: context,
                                   ),

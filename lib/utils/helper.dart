@@ -44,6 +44,13 @@ class Helper {
         : Helper.convertToDateTime(date);
   }
 
+  // Check if the date is current date
+  static bool isCurrentDate(DateTime date) {
+    return date.year == DateTime.now().year &&
+        date.month == DateTime.now().month &&
+        date.day == DateTime.now().day;
+  }
+
   // Show custom date picker dialog.
   static void showCustomDatePicker(
     BuildContext context,
@@ -100,8 +107,6 @@ class Helper {
                       ),
                       itemCount: options.length,
                       itemBuilder: (context, index) {
-                        bool isSelected = selectedIndex == index;
-
                         return GestureDetector(
                           onTap: () {
                             setState(() {
@@ -123,7 +128,7 @@ class Helper {
                           child: Container(
                             alignment: Alignment.center,
                             decoration: BoxDecoration(
-                              color: isSelected
+                              color: (selectedIndex == index)
                                   ? AppTheme.primaryColor
                                   : AppTheme.secondaryColor,
                               borderRadius: BorderRadius.circular(4),
@@ -131,7 +136,7 @@ class Helper {
                             child: Text(
                               options[index],
                               style: TextStyle(
-                                color: isSelected
+                                color: (selectedIndex == index)
                                     ? AppTheme.bgColor
                                     : AppTheme.primaryColor,
                                 fontSize: 14,
@@ -239,7 +244,7 @@ class Helper {
                     ),
 
                     // Bottom Buttons
-                    Container(
+                    SizedBox(
                       height: 72,
                       child: Column(
                         children: [
@@ -270,7 +275,9 @@ class Helper {
                                   onTap: () {
                                     bloc.add(UpdateFormField(
                                       field: field,
-                                      value: Helper.formatDate(selectedDate),
+                                      value: Helper.isCurrentDate(selectedDate)
+                                          ? Constants.today
+                                          : Helper.formatDate(selectedDate),
                                     ));
                                     Navigator.pop(context);
                                   },

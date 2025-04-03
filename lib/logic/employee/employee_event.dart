@@ -9,13 +9,6 @@ abstract class EmployeeEvent {}
 // Define UI events for the default employee form
 class InitializeForm extends EmployeeEvent {}
 
-// Define UI events for the employee form with values
-class InitializeFormWithDefaultValue extends EmployeeEvent {
-  final Employee employee;
-
-  InitializeFormWithDefaultValue({required this.employee});
-}
-
 // Define UI events for updating form fields
 class UpdateFormField extends EmployeeEvent {
   final String field;
