@@ -96,6 +96,7 @@ class Helper {
                         mainAxisSpacing: 14,
                         crossAxisSpacing: 14,
                         childAspectRatio: 3.6,
+                        mainAxisExtent: 50,
                       ),
                       itemCount: options.length,
                       itemBuilder: (context, index) {
@@ -121,7 +122,6 @@ class Helper {
                           },
                           child: Container(
                             alignment: Alignment.center,
-                            height: 30,
                             decoration: BoxDecoration(
                               color: isSelected
                                   ? AppTheme.primaryColor
@@ -312,9 +312,9 @@ class Helper {
 
   // Returns a bottom sheet with employee roles
   static void showEmployeeRoles(
-      BuildContext context,
-      EmployeeBloc bloc,
-      ) {
+    BuildContext context,
+    EmployeeBloc bloc,
+  ) {
     showModalBottomSheet(
       context: context,
       backgroundColor: AppTheme.bgColor,
@@ -332,13 +332,13 @@ class Helper {
             return ListTile(
               title: Center(
                   child: Text(
-                    Constants.roles[index],
-                    style: const TextStyle(
-                      color: AppTheme.textColor,
-                      fontWeight: FontWeight.w400,
-                      fontSize: 16,
-                    ),
-                  )),
+                Constants.roles[index],
+                style: const TextStyle(
+                  color: AppTheme.textColor,
+                  fontWeight: FontWeight.w400,
+                  fontSize: 16,
+                ),
+              )),
               onTap: () {
                 bloc.add(UpdateFormField(
                   field: Constants.selectRole,
