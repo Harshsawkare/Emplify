@@ -60,7 +60,7 @@ Widget buildCalendar(
                 day,
                 style: const TextStyle(
                   color: AppTheme.textColor,
-                  fontSize: 15,
+                  fontSize: 14,
                   fontWeight: FontWeight.w400,
                 ),
               ),
@@ -125,7 +125,7 @@ Widget buildCalendar(
             child: Text(
               day.toString(),
               style: TextStyle(
-                fontSize: 15,
+                fontSize: 14,
                 fontWeight: FontWeight.w400,
                 color: isPastDate && isLeavingDate
                     ? AppTheme.hintColor
